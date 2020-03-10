@@ -155,6 +155,30 @@ class DeliverymanController {
       email,
     });
   }
+
+  async delete(req, res) {
+    const userCheckAdmin = await User.findOne({
+      where: { id: req.userId, admin: true },
+    });
+
+    if (!userCheckAdmin) {
+      return res
+        .status(401)
+        .json({ error: 'Only administrators can list deliverymans.' });
+    }
+
+    const deliveryman = await Deliveryman.findByPk(req.params.id);
+
+    if (!deliveryman) {
+      return res.status(404).json({ error: 'Deliveryman not found' });
+    }
+
+    if (!(await deliveryman.destroy())) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    return res.json({ message: 'Deliveryman deleted successfully' });
+  }
 }
 
 export default new DeliverymanController();
