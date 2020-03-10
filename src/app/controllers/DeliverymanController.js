@@ -1,8 +1,33 @@
 import * as Yup from 'yup';
 import Deliveryman from '../models/Deliveryman';
 import User from '../models/User';
+import File from '../models/File';
 
 class DeliverymanController {
+  async index(req, res) {
+    const userCheckAdmin = await User.findOne({
+      where: { id: req.userId, admin: true },
+    });
+
+    if (!userCheckAdmin) {
+      return res
+        .status(401)
+        .json({ error: 'Only administrators can list deliverymans.' });
+    }
+
+    const deliverymans = await Deliveryman.findAll({
+      attributes: ['id', 'name', 'email', 'avatar_id'],
+      order: ['id'],
+      include: {
+        model: File,
+        as: 'avatar',
+        attributes: ['id', 'path', 'url'],
+      },
+    });
+
+    return res.json(deliverymans);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
