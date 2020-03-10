@@ -26,6 +26,7 @@ routes.post('/recipients', RecipientController.store);
 
 // Deliveryman Management
 routes.get('/deliverymans', DeliverymanController.index);
+routes.get('/deliverymans/:id', DeliverymanController.show);
 routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:id', DeliverymanController.update);
 
