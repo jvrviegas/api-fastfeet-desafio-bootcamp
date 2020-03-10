@@ -26,6 +26,7 @@ routes.post('/recipients', RecipientController.store);
 
 // Deliveryman Management
 routes.post('/deliverymans', DeliverymanController.store);
+routes.put('/deliverymans/:id', DeliverymanController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
