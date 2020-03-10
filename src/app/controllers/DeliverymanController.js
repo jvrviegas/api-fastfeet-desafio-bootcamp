@@ -28,6 +28,35 @@ class DeliverymanController {
     return res.json(deliverymans);
   }
 
+  async show(req, res) {
+    const userCheckAdmin = await User.findOne({
+      where: { id: req.userId, admin: true },
+    });
+
+    if (!userCheckAdmin) {
+      return res
+        .status(401)
+        .json({ error: 'Only administrators can list deliverymans.' });
+    }
+
+    const deliveryman = await Deliveryman.findOne({
+      where: { id: req.params.id },
+      attributes: ['id', 'name', 'email', 'avatar_id'],
+      order: ['id'],
+      include: {
+        model: File,
+        as: 'avatar',
+        attributes: ['id', 'path', 'url'],
+      },
+    });
+
+    if (!deliveryman) {
+      return res.status(404).json({ erorr: 'Deliveryman not found' });
+    }
+
+    return res.json(deliveryman);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
