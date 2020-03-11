@@ -10,6 +10,7 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import PackageController from './app/controllers/PackageController';
 
 import authMiddleware from './app/middlewares/auth';
+import adminMiddleware from './app/middlewares/admin';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -25,6 +26,8 @@ routes.put('/users', UserController.update);
 
 routes.post('/recipients', RecipientController.store);
 
+routes.use(adminMiddleware);
+
 // Deliveryman Management
 routes.get('/deliverymans', DeliverymanController.index);
 routes.get('/deliverymans/:id', DeliverymanController.show);
@@ -33,7 +36,7 @@ routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 // Packages Management
-routes.post('/packages', PackageController.store);
+// routes.post('/packages', PackageController.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
