@@ -19,6 +19,7 @@ const upload = multer(multerConfig);
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
+// Middleware to verify authentication
 routes.use(authMiddleware);
 
 // Authenticated Users
@@ -26,6 +27,7 @@ routes.put('/users', UserController.update);
 
 routes.post('/recipients', RecipientController.store);
 
+// Middleware to verify user admin
 routes.use(adminMiddleware);
 
 // Deliveryman Management
@@ -36,7 +38,7 @@ routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 // Packages Management
-// routes.post('/packages', PackageController.store);
+routes.post('/packages', PackageController.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
