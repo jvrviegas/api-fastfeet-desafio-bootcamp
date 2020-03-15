@@ -18,13 +18,13 @@ class PackageController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    if(!(await Recipient.findByPk(req.body.recipient_id))) {
+    if (!(await Recipient.findByPk(req.body.recipient_id))) {
       return res.status(400).json({ error: 'Unable to find recipient' });
     }
 
     const deliveryman = await Deliveryman.findByPk(req.body.deliveryman_id);
 
-    if(!deliveryman) {
+    if (!deliveryman) {
       return res.status(400).json({ error: 'Unable to find deliveryman' });
     }
 
