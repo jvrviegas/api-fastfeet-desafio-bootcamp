@@ -18,7 +18,9 @@ class PackageController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    if (!(await Recipient.findByPk(req.body.recipient_id))) {
+    const recipient = await Recipient.findByPk(req.body.recipient_id);
+
+    if (!recipient) {
       return res.status(400).json({ error: 'Unable to find recipient' });
     }
 
@@ -39,7 +41,11 @@ class PackageController {
     await Mail.sendMail({
       to: `${deliveryman.name} <${deliveryman.email}>`,
       subject: 'Nova encomenda',
-      text: 'Você possui uma nova encomenda para entrega',
+      template: 'newPackage',
+      context: {
+        deliveryman: deliveryman.name,
+        product: pack.product,
+      },
     });
 
     return res.status(201).json(pack);
