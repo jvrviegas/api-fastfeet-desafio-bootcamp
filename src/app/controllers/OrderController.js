@@ -1,11 +1,11 @@
 import * as Yup from 'yup';
-import Package from '../models/Package';
+import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 
 import Mail from '../../lib/Mail';
 
-class PackageController {
+class OrderController {
   async store(req, res) {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
@@ -30,11 +30,11 @@ class PackageController {
       return res.status(400).json({ error: 'Unable to find deliveryman' });
     }
 
-    const pack = await Package.create(req.body);
+    const order = await Order.create(req.body);
 
-    if (!pack) {
+    if (!order) {
       return res.status(500).json({
-        error: 'Fail to create the package, try again in a few seconds',
+        error: 'Fail to create the order, try again in a few seconds',
       });
     }
 
@@ -44,12 +44,12 @@ class PackageController {
       template: 'newPackage',
       context: {
         deliveryman: deliveryman.name,
-        product: pack.product,
+        product: order.product,
       },
     });
 
-    return res.status(201).json(pack);
+    return res.status(201).json(order);
   }
 }
 
-export default new PackageController();
+export default new OrderController();
