@@ -109,7 +109,7 @@ class OrderController {
     const { deliveryman_id, recipient_id } = req.body;
 
     if (!(await Deliveryman.findByPk(deliveryman_id))) {
-      return res.status(404).json({ error: 'Delivery man not found' });
+      return res.status(404).json({ error: 'Deliveryman not found' });
     }
 
     if (!(await Recipient.findByPk(recipient_id))) {
