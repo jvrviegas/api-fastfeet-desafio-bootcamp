@@ -27,7 +27,7 @@ class Database {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27017/gobarber',
+      'mongodb://localhost:27017/fastfeet',
       {
         useNewUrlParser: true,
         useFindAndModify: true,
