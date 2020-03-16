@@ -108,11 +108,11 @@ class OrderController {
 
     const { deliveryman_id, recipient_id } = req.body;
 
-    if (!(await Deliveryman.findByPk(deliveryman_id))) {
+    if (deliveryman_id && !(await Deliveryman.findByPk(deliveryman_id))) {
       return res.status(404).json({ error: 'Deliveryman not found' });
     }
 
-    if (!(await Recipient.findByPk(recipient_id))) {
+    if (recipient_id && !(await Recipient.findByPk(recipient_id))) {
       return res.status(404).json({ error: 'Recipient man not found' });
     }
 
@@ -124,7 +124,7 @@ class OrderController {
 
     order.update(req.body);
 
-    return res.json();
+    return res.json(order);
   }
 
   async delete(req, res) {
