@@ -33,7 +33,7 @@ class OrderController {
   }
 
   async show(req, res) {
-    const order = await Order.findByPk(req.body.order_id);
+    const order = await Order.findByPk(req.params.id);
 
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
