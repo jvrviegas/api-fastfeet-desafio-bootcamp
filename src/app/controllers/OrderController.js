@@ -7,6 +7,41 @@ import NewOrderMail from '../jobs/NewOrderMail';
 import Queue from '../../lib/Queue';
 
 class OrderController {
+  async index(req, res) {
+    const orders = await Order.findAll({
+      attributes: ['id', 'product', 'createdAt'],
+      order: [['createdAt', 'desc']],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+    });
+
+    if (!orders) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    return res.json(orders);
+  }
+
+  async show(req, res) {
+    const order = await Order.findByPk(req.body.order_id);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    return res.json(order);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
