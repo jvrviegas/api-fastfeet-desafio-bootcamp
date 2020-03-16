@@ -59,7 +59,6 @@ class OrderController {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
       deliveryman_id: Yup.number().required(),
-      signature_id: Yup.number(),
       product: Yup.string().required(),
     });
 
