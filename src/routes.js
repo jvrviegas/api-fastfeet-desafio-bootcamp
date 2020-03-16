@@ -38,6 +38,7 @@ routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 // Packages Management
+routes.get('/orders', OrderController.index);
 routes.post('/orders', OrderController.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
