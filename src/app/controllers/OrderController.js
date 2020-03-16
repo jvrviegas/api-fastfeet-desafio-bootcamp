@@ -3,7 +3,8 @@ import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 
-import Mail from '../../lib/Mail';
+import NewOrderMail from '../jobs/NewOrderMail';
+import Queue from '../../lib/Queue';
 
 class OrderController {
   async store(req, res) {
@@ -38,14 +39,9 @@ class OrderController {
       });
     }
 
-    await Mail.sendMail({
-      to: `${deliveryman.name} <${deliveryman.email}>`,
-      subject: 'Nova encomenda',
-      template: 'newPackage',
-      context: {
-        deliveryman: deliveryman.name,
-        product: order.product,
-      },
+    await Queue.add(NewOrderMail.key, {
+      deliveryman,
+      order,
     });
 
     return res.status(201).json(order);
