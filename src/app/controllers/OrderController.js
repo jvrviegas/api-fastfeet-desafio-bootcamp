@@ -95,6 +95,38 @@ class OrderController {
     return res.status(201).json(order);
   }
 
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
+      product: Yup.string(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails.' });
+    }
+
+    const { deliveryman_id, recipient_id } = req.body;
+
+    if (!(await Deliveryman.findByPk(deliveryman_id))) {
+      return res.status(404).json({ error: 'Delivery man not found' });
+    }
+
+    if (!(await Recipient.findByPk(recipient_id))) {
+      return res.status(404).json({ error: 'Recipient man not found' });
+    }
+
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    order.update(req.body);
+
+    return res.json();
+  }
+
   async delete(req, res) {
     const order = await Order.findByPk(req.params.id, {
       include: [
