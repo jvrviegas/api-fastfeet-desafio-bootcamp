@@ -12,6 +12,7 @@ import OpenOrdersController from './app/controllers/OpenOrdersController';
 import DeliveredOrdersController from './app/controllers/DeliveredOrdersController';
 import StartDeliveryController from './app/controllers/StartDeliveryController';
 import EndDeliveryController from './app/controllers/EndDeliveryController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -35,6 +36,9 @@ routes.put(
   upload.single('file'),
   EndDeliveryController.update
 );
+
+// Delivery Problems
+routes.post('/delivery/:orderId/problems', DeliveryProblemController.store);
 
 // Middleware to verify authentication
 routes.use(authMiddleware);
@@ -60,6 +64,9 @@ routes.get('/orders/:id', OrderController.show);
 routes.post('/orders', OrderController.store);
 routes.put('/orders/:id', OrderController.update);
 routes.delete('/orders/:id', OrderController.delete);
+
+// Deliveries Problems
+routes.get('/deliveries/problems', DeliveryProblemController.index);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
