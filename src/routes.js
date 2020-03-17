@@ -11,6 +11,7 @@ import OrderController from './app/controllers/OrderController';
 import OpenOrdersController from './app/controllers/OpenOrdersController';
 import DeliveredOrdersController from './app/controllers/DeliveredOrdersController';
 import StartDeliveryController from './app/controllers/StartDeliveryController';
+import EndDeliveryController from './app/controllers/EndDeliveryController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -28,6 +29,10 @@ routes.get('/deliveryman/:id/delivered', DeliveredOrdersController.index);
 routes.put(
   '/deliveryman/:deliverymanId/start_delivery/:orderId',
   StartDeliveryController.update
+);
+routes.put(
+  '/deliveryman/:deliverymanId/end_delivery/:orderId',
+  EndDeliveryController.update
 );
 
 // Middleware to verify authentication
