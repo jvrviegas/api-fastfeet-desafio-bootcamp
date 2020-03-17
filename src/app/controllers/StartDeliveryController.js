@@ -1,4 +1,4 @@
-import { isBefore, isAfter, getHours } from 'date-fns';
+import { isBefore, isAfter, getHours, startOfDay, endOfDay } from 'date-fns';
 import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
@@ -38,19 +38,20 @@ class StartDeliveryController {
       where: {
         deliveryman_id: deliveryman.id,
         start_date: {
-          [Op.ne]: null,
+          [Op.between]: [startOfDay(date), endOfDay(date)],
         },
       },
     });
 
-    if (countDeliveries.length > 5) {
+    if (countDeliveries.length >= 5) {
       return res
         .status(406)
         .json({ error: 'You can make only 5 withdrawals a day' });
     }
 
-    order.start_date = new Date();
-    await order.save();
+    await order.update({
+      start_date: new Date(),
+    });
 
     return res.json(order);
   }
