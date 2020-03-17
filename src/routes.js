@@ -32,6 +32,7 @@ routes.put(
 );
 routes.put(
   '/deliveryman/:deliverymanId/end_delivery/:orderId',
+  upload.single('file'),
   EndDeliveryController.update
 );
 
