@@ -10,6 +10,7 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import OrderController from './app/controllers/OrderController';
 import OpenOrdersController from './app/controllers/OpenOrdersController';
 import DeliveredOrdersController from './app/controllers/DeliveredOrdersController';
+import StartDeliveryController from './app/controllers/StartDeliveryController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -24,6 +25,10 @@ routes.post('/sessions', SessionController.store);
 // Deliverymans
 routes.get('/deliveryman/:id/deliveries', OpenOrdersController.index);
 routes.get('/deliveryman/:id/delivered', DeliveredOrdersController.index);
+routes.put(
+  '/deliveryman/:deliverymanId/start_delivery/:orderId',
+  StartDeliveryController.update
+);
 
 // Middleware to verify authentication
 routes.use(authMiddleware);
