@@ -67,6 +67,7 @@ routes.delete('/orders/:id', OrderController.delete);
 
 // Deliveries Problems
 routes.get('/deliveries/problems', DeliveryProblemController.index);
+routes.get('/delivery/:orderId/problems', DeliveryProblemController.show);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
