@@ -3,8 +3,6 @@ import DeliveryProblem from '../models/DeliveryProblem';
 import User from '../models/User';
 import Order from '../models/Order';
 
-import Queue from '../../lib/Queue';
-
 class DeliveryProblemController {
   async index(req, res) {
     const userCheckAdmin = await User.findOne({
