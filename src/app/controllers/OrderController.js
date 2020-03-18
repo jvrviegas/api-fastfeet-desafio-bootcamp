@@ -131,32 +131,15 @@ class OrderController {
   }
 
   async delete(req, res) {
-    const order = await Order.findByPk(req.params.id, {
-      include: [
-        {
-          model: Recipient,
-          as: 'recipient',
-          attributes: ['id', 'name'],
-        },
-        {
-          model: Deliveryman,
-          as: 'deliveryman',
-          attributes: ['id', 'name', 'email'],
-        },
-      ],
-    });
+    const order = await Order.findByPk(req.params.id);
 
-    if (order.start_date !== null) {
-      return res
-        .status(401)
-        .json({ error: 'You cannot cancel a delivery in progress.' });
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
     }
 
-    order.canceled_at = new Date();
+    await order.destroy();
 
-    await order.save();
-
-    return res.json(order);
+    return res.json({ message: 'Order deleted successfully' });
   }
 }
 
