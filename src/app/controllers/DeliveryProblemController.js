@@ -1,36 +1,15 @@
 import * as Yup from 'yup';
 import DeliveryProblem from '../models/DeliveryProblem';
-import User from '../models/User';
 import Order from '../models/Order';
 
 class DeliveryProblemController {
   async index(req, res) {
-    const userCheckAdmin = await User.findOne({
-      where: { id: req.userId, admin: true },
-    });
-
-    if (!userCheckAdmin) {
-      return res
-        .status(401)
-        .json({ error: 'Only administrators can list deliveries problems.' });
-    }
-
     const deliveriesProblem = await DeliveryProblem.findAll();
 
     return res.json(deliveriesProblem);
   }
 
   async show(req, res) {
-    const userCheckAdmin = await User.findOne({
-      where: { id: req.userId, admin: true },
-    });
-
-    if (!userCheckAdmin) {
-      return res
-        .status(401)
-        .json({ error: 'Only administrators can see a delivery problem.' });
-    }
-
     const order = await Order.findByPk(req.params.orderId);
 
     if (!order) {
