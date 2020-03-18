@@ -14,12 +14,42 @@ class DeliveryProblemController {
     if (!userCheckAdmin) {
       return res
         .status(401)
-        .json({ error: 'Only administrators can list deliverymans.' });
+        .json({ error: 'Only administrators can list deliveries problems.' });
     }
 
     const deliveriesProblem = await DeliveryProblem.findAll();
 
     return res.json(deliveriesProblem);
+  }
+
+  async show(req, res) {
+    const userCheckAdmin = await User.findOne({
+      where: { id: req.userId, admin: true },
+    });
+
+    if (!userCheckAdmin) {
+      return res
+        .status(401)
+        .json({ error: 'Only administrators can see a delivery problem.' });
+    }
+
+    const order = await Order.findByPk(req.params.orderId);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    const deliveryProblems = await DeliveryProblem.findAll({
+      where: { delivery_id: req.params.orderId },
+    });
+
+    if (deliveryProblems.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'This order does not have delivery problems' });
+    }
+
+    return res.json(deliveryProblems);
   }
 
   async store(req, res) {
