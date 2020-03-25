@@ -1,21 +1,19 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
 import User from '../models/User';
 import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const userCheckAdmin = await User.findOne({
-      where: { id: req.userId, admin: true },
-    });
-
-    if (!userCheckAdmin) {
-      return res
-        .status(401)
-        .json({ error: 'Only administrators can list deliverymans.' });
-    }
+    const { filter = '' } = req.query;
 
     const deliverymans = await Deliveryman.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${filter}%`,
+        },
+      },
       attributes: ['id', 'name', 'email', 'avatar_id'],
       order: ['id'],
       include: {
