@@ -40,6 +40,7 @@ routes.put(
 
 // Delivery Problems
 routes.post('/delivery/:orderId/problems', DeliveryProblemController.store);
+routes.put('/delivery/:orderId/problems', DeliveryProblemController.update);
 
 // Middleware to verify authentication
 routes.use(authMiddleware);
@@ -47,9 +48,7 @@ routes.use(authMiddleware);
 // Authenticated Users
 routes.put('/users', UserController.update);
 
-routes.post('/recipients', RecipientController.store);
-
-// Middleware to verify user admin
+// Middleware to verify if user is admin
 routes.use(adminMiddleware);
 
 // Deliveryman Management
@@ -58,6 +57,13 @@ routes.get('/deliverymans/:id', DeliverymanController.show);
 routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
+
+// Recipients Management
+routes.get('/recipients', RecipientController.index);
+routes.get('/recipients/:id', RecipientController.show);
+routes.post('/recipients', RecipientController.store);
+routes.put('/recipients/:id', RecipientController.update);
+routes.delete('/recipients/:id', RecipientController.delete);
 
 // Packages Management
 routes.get('/orders', OrderController.index);
@@ -69,7 +75,7 @@ routes.delete('/orders/:id', OrderController.delete);
 // Deliveries Problems
 routes.get('/deliveries/problems', DeliveryProblemController.index);
 routes.get('/delivery/:orderId/problems', DeliveryProblemController.show);
-routes.delete('/problem/:id/cancel-delivery', CancelDeliveryController.delete);
+routes.delete('/problem/:id/cancel-delivery', CancelDeliveryController.create);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
