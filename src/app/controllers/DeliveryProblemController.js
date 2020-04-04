@@ -53,6 +53,22 @@ class DeliveryProblemController {
 
     return res.json(deliveryProblem);
   }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      description: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const delivery_problem = await DeliveryProblem.findByPk(req.params.id);
+
+    await delivery_problem.update(req.body);
+
+    return res.json(delivery_problem);
+  }
 }
 
 export default new DeliveryProblemController();
