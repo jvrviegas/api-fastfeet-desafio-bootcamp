@@ -69,6 +69,20 @@ class DeliveryProblemController {
 
     return res.json(delivery_problem);
   }
+
+  async delete(req, res) {
+    const delivery_problem = await DeliveryProblem.findByPk(req.params.id);
+
+    if (!delivery_problem) {
+      return res.status(404).json({ error: 'Problem not found' });
+    }
+
+    if (!(await delivery_problem.destroy())) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    return res.json({ message: 'Problem deleted successfully' });
+  }
 }
 
 export default new DeliveryProblemController();
