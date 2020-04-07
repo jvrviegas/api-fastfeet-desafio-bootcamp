@@ -25,7 +25,16 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name'],
+          attributes: [
+            'id',
+            'name',
+            'street_name',
+            'town',
+            'state',
+            'number',
+            'complement',
+            'postal_code',
+          ],
         },
         {
           model: Deliveryman,
