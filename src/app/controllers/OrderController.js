@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 import NewOrderMail from '../jobs/NewOrderMail';
 import Queue from '../../lib/Queue';
@@ -30,6 +31,13 @@ class OrderController {
           model: Deliveryman,
           as: 'deliveryman',
           attributes: ['id', 'name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'utl'],
+            },
+          ],
         },
       ],
     });
