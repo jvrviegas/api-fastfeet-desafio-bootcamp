@@ -72,7 +72,7 @@ class RecipientController {
       complement: Yup.string(),
       state: Yup.string(),
       town: Yup.string(),
-      postal_code: Yup.number(),
+      postal_code: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
