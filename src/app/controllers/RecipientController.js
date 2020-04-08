@@ -20,25 +20,13 @@ class RecipientController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string()
-        .required()
-        .min(6),
-      street_name: Yup.string()
-        .required()
-        .min(6),
+      name: Yup.string().required(),
+      street_name: Yup.string().required(),
       number: Yup.number().required(),
-      complement: Yup.string()
-        .required()
-        .min(6),
-      state: Yup.string()
-        .required()
-        .min(2),
-      town: Yup.string()
-        .required()
-        .min(6),
-      postal_code: Yup.number()
-        .required()
-        .min(7),
+      complement: Yup.string(),
+      state: Yup.string().required(),
+      town: Yup.string().required(),
+      postal_code: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
