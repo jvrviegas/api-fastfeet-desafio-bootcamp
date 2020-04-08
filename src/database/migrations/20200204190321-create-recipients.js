@@ -21,7 +21,7 @@ module.exports = {
       },
       complement: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       state: {
         type: Sequelize.STRING,
@@ -32,7 +32,7 @@ module.exports = {
         allowNull: false,
       },
       postal_code: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
