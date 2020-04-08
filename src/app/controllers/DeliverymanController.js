@@ -95,11 +95,12 @@ class DeliverymanController {
         .json({ error: 'Administrators cannot be deliverymans' });
     }
 
-    const { name, email } = await Deliveryman.create(req.body);
+    const { name, email, avatar_id } = await Deliveryman.create(req.body);
 
     return res.json({
       name,
       email,
+      avatar_id,
     });
   }
 
