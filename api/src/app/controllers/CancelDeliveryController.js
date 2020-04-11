@@ -7,7 +7,7 @@ import CancelDeliveryMail from '../jobs/CancelDeliveryMail';
 import Queue from '../../lib/Queue';
 
 class CancelDeliveryController {
-  async create(req, res) {
+  async update(req, res) {
     const deliveryProblem = await DeliveryProblem.findByPk(req.params.id);
 
     if (!deliveryProblem) {

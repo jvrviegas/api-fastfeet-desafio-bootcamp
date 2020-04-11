@@ -17,7 +17,6 @@ class OrderController {
           [Op.iLike]: `%${filter}%`,
         },
       },
-      attributes: ['id', 'product', 'createdAt'],
       order: [['created_at', 'desc']],
       limit: 20,
       offset: (page - 1) * 20,

@@ -6,7 +6,7 @@ import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const { filter = '' } = req.query;
+    const { filter = '', page = 1 } = req.query;
 
     const deliverymans = await Deliveryman.findAll({
       where: {
@@ -16,6 +16,8 @@ class DeliverymanController {
       },
       attributes: ['id', 'name', 'email', 'avatar_id'],
       order: ['id'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: {
         model: File,
         as: 'avatar',

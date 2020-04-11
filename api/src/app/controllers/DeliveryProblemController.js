@@ -4,9 +4,16 @@ import Order from '../models/Order';
 
 class DeliveryProblemController {
   async index(req, res) {
-    const deliveriesProblem = await DeliveryProblem.findAll();
+    const deliveriesProblems = await DeliveryProblem.findAll({
+      order: ['id'],
+      include: {
+        model: Order,
+        as: 'order',
+        attributes: ['id'],
+      },
+    });
 
-    return res.json(deliveriesProblem);
+    return res.json(deliveriesProblems);
   }
 
   async show(req, res) {
