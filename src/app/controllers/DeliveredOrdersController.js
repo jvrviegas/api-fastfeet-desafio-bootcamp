@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
+import Recipient from '../models/Recipient';
 
 class DeliveredOrdersController {
   async index(req, res) {
@@ -20,19 +21,15 @@ class DeliveredOrdersController {
           [Op.ne]: null,
         },
       },
-      attributes: [
-        'id',
-        'deliveryman_id',
-        'recipient_id',
-        'created_at',
-        'canceled_at',
-        'start_date',
-        'end_date',
-        'signature_id',
-      ],
-      order: [['created_at', 'desc']],
+      order: [['created_at']],
       limit: 20,
       offset: (page - 1) * 20,
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+        },
+      ],
     });
 
     if (!deliveredOrders) {
