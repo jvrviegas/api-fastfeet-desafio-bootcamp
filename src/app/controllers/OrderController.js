@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 import NewOrderMail from '../jobs/NewOrderMail';
 import Queue from '../../lib/Queue';
@@ -16,7 +17,6 @@ class OrderController {
           [Op.iLike]: `%${filter}%`,
         },
       },
-      attributes: ['id', 'product', 'createdAt'],
       order: [['created_at', 'desc']],
       limit: 20,
       offset: (page - 1) * 20,
@@ -24,12 +24,15 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name'],
         },
         {
           model: Deliveryman,
           as: 'deliveryman',
-          attributes: ['id', 'name', 'email'],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['id', 'path', 'url'],
         },
       ],
     });
@@ -47,12 +50,10 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name'],
         },
         {
           model: Deliveryman,
           as: 'deliveryman',
-          attributes: ['id', 'name', 'email'],
         },
       ],
     });
