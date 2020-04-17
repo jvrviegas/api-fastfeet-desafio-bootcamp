@@ -27,20 +27,8 @@ class DeliverymanController {
   }
 
   async show(req, res) {
-    const userCheckAdmin = await User.findOne({
-      where: { id: req.userId, admin: true },
-    });
-
-    if (!userCheckAdmin) {
-      return res
-        .status(401)
-        .json({ error: 'Only administrators can list deliverymans.' });
-    }
-
     const deliveryman = await Deliveryman.findOne({
       where: { id: req.params.id },
-      attributes: ['id', 'name', 'email', 'avatar_id'],
-      order: ['id'],
       include: {
         model: File,
         as: 'avatar',
