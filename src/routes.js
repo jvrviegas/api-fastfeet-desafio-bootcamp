@@ -26,6 +26,7 @@ routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 // Deliverymans
+routes.get('/deliverymans/:id', DeliverymanController.show);
 routes.get('/deliveryman/:id/deliveries', OpenOrdersController.index);
 routes.get('/deliveryman/:id/delivered', DeliveredOrdersController.index);
 routes.put(
@@ -37,8 +38,10 @@ routes.put(
   upload.single('file'),
   EndDeliveryController.update
 );
+routes.post('/files', upload.single('file'), FileController.store);
 
 // Delivery Problems
+routes.get('/delivery/:orderId/problems', DeliveryProblemController.show);
 routes.post('/delivery/:orderId/problems', DeliveryProblemController.store);
 routes.put('/delivery/:orderId/problems', DeliveryProblemController.update);
 
@@ -53,7 +56,6 @@ routes.use(adminMiddleware);
 
 // Deliveryman Management
 routes.get('/deliverymans', DeliverymanController.index);
-routes.get('/deliverymans/:id', DeliverymanController.show);
 routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
@@ -74,9 +76,6 @@ routes.delete('/orders/:id', OrderController.delete);
 
 // Deliveries Problems
 routes.get('/deliveries/problems', DeliveryProblemController.index);
-routes.get('/delivery/:orderId/problems', DeliveryProblemController.show);
 routes.delete('/problem/:id/cancel-delivery', CancelDeliveryController.create);
-
-routes.post('/files', upload.single('file'), FileController.store);
 
 export default routes;
