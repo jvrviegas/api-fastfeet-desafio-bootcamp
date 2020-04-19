@@ -23,19 +23,13 @@ class RecipientController {
       name: Yup.string()
         .required()
         .min(6),
-      street_name: Yup.string()
-        .required()
-        .min(6),
+      street_name: Yup.string().required(),
       number: Yup.number().required(),
-      complement: Yup.string()
-        .required()
-        .min(6),
+      complement: Yup.string(),
       state: Yup.string()
         .required()
         .min(2),
-      town: Yup.string()
-        .required()
-        .min(6),
+      town: Yup.string().required(),
       postal_code: Yup.number()
         .required()
         .min(7),
