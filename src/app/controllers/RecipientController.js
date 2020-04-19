@@ -1,9 +1,21 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const recipients = await Recipient.findAll();
+    const { page = 1, filter = '' } = req.query;
+
+    const recipients = await Recipient.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${filter}%`,
+        },
+      },
+      order: ['id'],
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
 
     return res.json(recipients);
   }
