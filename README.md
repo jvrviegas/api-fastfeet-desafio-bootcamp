@@ -20,9 +20,9 @@ A aplicação desenvolvida é um app para uma transportadora fictícia, o FastFe
 
 Nestra primeira parte foi desenvolvido o backend da aplicação, que fará integração com os módulos de frontend para [Web](https://github.com/jvrviegas/fastfeet-web) e [Mobile](https://github.com/jvrviegas/fastfeet-mobile), onde foram feitas todas as funcionalidades e regras de negócio da aplicação.
 
-<h3 align="center">
+<h2 align="center">
   :clipboard: Funcionalidades do Administrador:
-</h3>
+</h2>
 
 1. Autenticação
 Para que o administrador possa acessar o sistema deverá ser informado o e-mail e senha.
@@ -40,9 +40,9 @@ Visualizar, cadastrar, editar e excluir destinatários na plataforma.
 5. Gestão de problemas
 Visualizar problemas de todas as encomendas.
 
-<h3 align="center">
+<h2 align="center">
   :clipboard: Funcionalidades do Entregador:
-</h3>
+</h2>
 
 1. Autenticação
 Para que o entregador possa visualizar suas encomendas, ele deverá informar apenas seu ID de cadastro (ID do entregador no banco de dados).
