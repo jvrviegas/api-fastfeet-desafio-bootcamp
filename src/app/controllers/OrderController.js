@@ -28,6 +28,13 @@ class OrderController {
         {
           model: Deliveryman,
           as: 'deliveryman',
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
         },
         {
           model: File,
