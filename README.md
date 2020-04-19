@@ -109,10 +109,4 @@ docker start fastfeetdb mongofastfeet redisfastfeet
 - 📛 **Sentry** - Plataforma para monitoramento de erros e notificação em tempo real
 - 📄 **ESLint** - Biblioteca para análise de código estática para identificar e reportar padrões no código Javascript
 
-## :camera: Demonstração
-<h1 align="center">
-  <img alt="Demonstração" src=""
- />
-</h1>
-
 
