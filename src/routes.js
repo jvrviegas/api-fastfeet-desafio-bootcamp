@@ -21,6 +21,11 @@ import adminMiddleware from './app/middlewares/admin';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+// Server running
+routes.get('/', (req, res) =>
+  res.status(200).json({ message: 'Server running...' })
+);
+
 // Users
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
